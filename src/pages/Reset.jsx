@@ -23,7 +23,7 @@ export default function Reset() {
 
     try {
       await api.post(`/api/users/reset-password/${token}`, {
-        password,
+        newPassword: password,
       })
 
       toast.success('Senha atualizada com sucesso!')
