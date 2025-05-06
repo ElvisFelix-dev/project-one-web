@@ -104,7 +104,7 @@ export default function SignIn() {
               Lembrar me
             </label>
             <Link to="/forgot" className="text-blue-600 hover:underline dark:text-blue-400">
-              Esqueceu Link senha?
+              Esqueceu a senha?
             </Link>
           </div>
 
