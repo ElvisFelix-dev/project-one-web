@@ -11,7 +11,6 @@ import Home from './pages/Home'
 import Dashboard from './pages/Dashboard'
 
 import Footer from './components/Footer'
-import { AuthProvider } from './context/AuthContext'
 import PrivateRoute from './components/PrivateRoute'
 
 export function App() {

@@ -1,22 +1,17 @@
 import { useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai'
 import { toast } from 'react-toastify'
 
 import api from '../service/api'
-
 import imgLogo from '../assets/img_Logo.svg'
 
 export default function Reset() {
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
 
-  const location = useLocation()
+  const { token } = useParams()
   const navigate = useNavigate()
-
-  // Pega o token da URL
-  const queryParams = new URLSearchParams(location.search)
-  const token = queryParams.get('token')
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -45,11 +40,7 @@ export default function Reset() {
     <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 px-4">
       <div className="w-full max-w-md bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 space-y-6">
         <div className="flex justify-center">
-          <img
-            className="h-36 object-contain"
-            src={imgLogo}
-            alt="logo"
-          />
+          <img className="h-36 object-contain" src={imgLogo} alt="logo" />
         </div>
         <h2 className="text-center text-2xl font-bold text-gray-900 dark:text-white">
           Atualizar senha
