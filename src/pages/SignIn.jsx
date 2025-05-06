@@ -13,6 +13,7 @@ export default function SignIn() {
   const [showPassword, setShowPassword] = useState(false)
 
   const navigate = useNavigate()
+  const { login } = useAuth()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -24,6 +25,7 @@ export default function SignIn() {
       })
 
       localStorage.setItem('token', response.data.token)
+      login(response.data)  // <-- ISSO É ESSENCIAL
 
       toast.success(`Seja bem-vindo ${name} 👋!`)
       setTimeout(() => {
