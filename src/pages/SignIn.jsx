@@ -22,6 +22,9 @@ export default function SignIn() {
         userName: name,
         password,
       })
+
+      localStorage.setItem('token', response.data.token)
+
       toast.success(`Seja bem-vindo ${name} 👋!`)
       setTimeout(() => {
         navigate('/dashboard')

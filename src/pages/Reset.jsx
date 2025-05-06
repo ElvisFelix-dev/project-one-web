@@ -23,7 +23,6 @@ export default function Reset() {
 
     try {
       await api.post(`/api/users/reset-password/${token}`, {
-        token,
         password,
       })
 

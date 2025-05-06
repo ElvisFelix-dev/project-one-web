@@ -3,6 +3,11 @@ import { Navigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 
 export default function PrivateRoute({ children }) {
-  const { user } = useAuth()
-  return user ? children : <Navigate to="/sign-in" />
+  const { user, loading } = useAuth()
+  const token = localStorage.getItem('token')
+
+  if (loading) return <div>Carregando...</div>
+
+  return user || token ? children : <Navigate to="/sign-in" />
 }
+
