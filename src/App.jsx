@@ -12,10 +12,12 @@ import Dashboard from './pages/Dashboard'
 
 import Footer from './components/Footer'
 import PrivateRoute from './components/PrivateRoute'
+import Header from './components/Header'
 
 export function App() {
   return (
     <>
+      <Header />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/sign-in" element={<SignIn />} />

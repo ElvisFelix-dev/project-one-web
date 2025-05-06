@@ -3,7 +3,6 @@ import Header from "../components/Header";
 export default function Home(){
   return(
     <div className="bg-gray-50 dark:bg-gray-900">
-      <Header/>
       <div className="relative py-12 sm:py-16 lg:pt-20 xl:pb-0 bg-gray-50 dark:bg-gray-900 ">
         <div className="relative mx-auto hidden max-w-screen-lg md:block">
 
