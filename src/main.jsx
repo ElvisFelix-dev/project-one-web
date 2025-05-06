@@ -9,12 +9,12 @@ import { App } from './App.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <BrowserRouter>
-      <HelmetProvider>
-        <AuthProvider> {/* <-- Aqui está o AuthContext corretamente envolvido */}
+    <AuthProvider>
+      <BrowserRouter>
+        <HelmetProvider>
           <App />
-        </AuthProvider>
-      </HelmetProvider>
-    </BrowserRouter>
+        </HelmetProvider>
+      </BrowserRouter>
+    </AuthProvider>
   </StrictMode>,
 )
