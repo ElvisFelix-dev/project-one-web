@@ -1,14 +1,14 @@
-// pages/Dashboard.jsx
-import { useState, useEffect } from 'react'
-import { toast } from 'react-toastify'
+import { useEffect, useState } from 'react'
+import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts'
 import api from '../service/api'
 import { useAuth } from '../context/AuthContext'
-import AddItemForm from '../components/AddItemForm'
-import ItemList from '../components/ItemList'
+import { toast } from 'react-toastify'
+
+const COLORS = ['#8884d8', '#82ca9d', '#ffc658', '#ff7f50', '#a29bfe', '#00cec9']
 
 export default function Dashboard() {
   const { user } = useAuth()
-  const [items, setItems] = useState([])
+  const [data, setData] = useState([])
 
   useEffect(() => {
     if (user) fetchItems()
@@ -17,18 +17,51 @@ export default function Dashboard() {
   const fetchItems = async () => {
     try {
       const response = await api.get(`/api/items/${user._id}`)
-      setItems(response.data)
+
+      const categoryMap = {}
+
+      response.data.forEach(item => {
+        const category = item.category || 'Sem categoria'
+        categoryMap[category] = (categoryMap[category] || 0) + 1
+      })
+
+      const chartData = Object.entries(categoryMap).map(([name, value]) => ({
+        name,
+        value,
+      }))
+
+      setData(chartData)
     } catch (err) {
-      toast.error('Erro ao buscar os itens')
+      toast.error('Erro ao carregar categorias')
     }
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-4">
-      <h1 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">Nova Lista de Compras</h1>
-      <AddItemForm userId={user._id} onItemAdded={(item) => setItems([...items, item])} />
-      <h2 className="text-xl font-semibold text-gray-700 dark:text-gray-200 mb-2">Minhas Listas</h2>
-      <ItemList items={items} setItems={setItems} />
+    <div className="w-full max-w-2xl mx-auto mt-8 p-4 bg-white dark:bg-gray-800 rounded-lg shadow">
+      <h2 className="text-xl font-bold text-center text-gray-800 dark:text-white mb-4">
+        Itens por Categoria
+      </h2>
+      <ResponsiveContainer width="100%" height={300}>
+        <PieChart>
+          <Pie
+            dataKey="value"
+            isAnimationActive
+            data={data}
+            cx="50%"
+            cy="50%"
+            outerRadius={100}
+            label={({ name, percent }) =>
+              `${name} (${(percent * 100).toFixed(0)}%)`
+            }
+          >
+            {data.map((_, index) => (
+              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+            ))}
+          </Pie>
+          <Tooltip />
+          <Legend verticalAlign="bottom" />
+        </PieChart>
+      </ResponsiveContainer>
     </div>
   )
 }

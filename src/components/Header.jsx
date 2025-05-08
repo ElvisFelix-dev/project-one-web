@@ -58,11 +58,6 @@ export default function Header() {
             ) : (
               <>
                 <li className="md:mr-12">
-                  <Link to="/dashboard" className="text-gray-700 dark:text-white hover:underline">
-                    Dashboard
-                  </Link>
-                </li>
-                <li className="md:mr-12">
                   <Link to="/additems" className="text-gray-700 dark:text-white hover:underline">
                     Adcionar Itens
                   </Link>

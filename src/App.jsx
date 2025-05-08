@@ -9,6 +9,7 @@ import Forgot from './pages/Forgot'
 import Reset from './pages/Reset'
 import Home from './pages/Home'
 import Dashboard from './pages/Dashboard'
+import List from './pages/List'
 
 import Footer from './components/Footer'
 import PrivateRoute from './components/PrivateRoute'
@@ -30,6 +31,14 @@ export function App() {
             element={
               <PrivateRoute>
                 <Dashboard />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/list"
+            element={
+              <PrivateRoute>
+                <List />
               </PrivateRoute>
             }
           />
