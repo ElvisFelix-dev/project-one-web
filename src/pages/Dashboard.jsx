@@ -3,7 +3,7 @@ import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recha
 import api from '../service/api'
 import { useAuth } from '../context/AuthContext'
 import { toast } from 'react-toastify'
-import ItemsBarChart from '../components/ItemsBarChart'
+import ItemsByNameChart from '../components/ItemsByNameChart'
 
 const COLORS = ['#8884d8', '#82ca9d', '#ffc658', '#ff7f50', '#a29bfe', '#00cec9']
 
@@ -38,7 +38,7 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="w-full max-w-2xl mx-auto mt-8 p-4 pb-20 bg-white dark:bg-gray-800 rounded-lg shadow">
+    <div className="w-full max-w-2xl mx-auto p-4 mt-20 pb-20 bg-white dark:bg-gray-800 rounded-lg shadow">
       <h2 className="text-xl font-bold text-center text-gray-800 dark:text-white mb-4">
         Itens por Categoria
       </h2>
@@ -63,7 +63,7 @@ export default function Dashboard() {
           <Legend verticalAlign="bottom" />
         </PieChart>
       </ResponsiveContainer>
-      <ItemsBarChart />
+      <ItemsByNameChart />
     </div>
   )
 }

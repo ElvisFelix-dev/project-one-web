@@ -1,10 +1,11 @@
+// src/components/ItemsByNameChart.jsx
 import { useState, useEffect } from 'react'
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts'
 import api from '../service/api'
 import { useAuth } from '../context/AuthContext'
 import { toast } from 'react-toastify'
 
-export default function ItemsBarChart() {
+export default function ItemsByNameChart() {
   const { user } = useAuth()
   const [data, setData] = useState([])
 
@@ -15,36 +16,36 @@ export default function ItemsBarChart() {
   const fetchItems = async () => {
     try {
       const response = await api.get(`/api/items/${user._id}`)
-      const grouped = groupByCategory(response.data)
+      const grouped = groupByName(response.data)
       setData(grouped)
     } catch (err) {
-      toast.error('Erro ao carregar dados do gráfico')
+      toast.error('Erro ao carregar itens para o gráfico')
     }
   }
 
-  const groupByCategory = (items) => {
+  const groupByName = (items) => {
     const counts = {}
     items.forEach((item) => {
-      if (item.category) {
-        counts[item.category] = (counts[item.category] || 0) + item.quantity
+      if (item.name) {
+        counts[item.name] = (counts[item.name] || 0) + item.quantity
       }
     })
-    return Object.keys(counts).map((key) => ({
-      category: key,
-      quantidade: counts[key],
+    return Object.keys(counts).map((name) => ({
+      name,
+      quantidade: counts[name],
     }))
   }
 
   return (
     <div className="w-full max-w-3xl mx-auto mt-10">
-      <h2 className="text-xl font-semibold text-center mb-4 text-gray-800 dark:text-gray-100">Itens por Categoria</h2>
+      <h2 className="text-xl font-semibold text-center mb-4 text-gray-800 dark:text-gray-100">Quantidade por Item</h2>
       <ResponsiveContainer width="100%" height={300}>
         <BarChart data={data} margin={{ top: 20, right: 30, left: 10, bottom: 5 }}>
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="category" />
+          <XAxis dataKey="name" />
           <YAxis />
           <Tooltip />
-          <Bar dataKey="quantidade" fill="#3b82f6" />
+          <Bar dataKey="quantidade" fill="#10b981" />
         </BarChart>
       </ResponsiveContainer>
     </div>
