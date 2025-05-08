@@ -4,6 +4,7 @@ import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai'
 import { toast } from 'react-toastify'
 
 import api from '../service/api'
+import { useAuth } from '../context/AuthContext'
 
 import imgLogo from '../assets/img_Logo.svg'
 
