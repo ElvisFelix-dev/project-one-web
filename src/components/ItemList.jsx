@@ -1,7 +1,9 @@
 // components/ItemList.jsx
 import { useState } from 'react'
+import { CiTrash, CiEdit } from "react-icons/ci";
 import { format } from 'date-fns'
 import { toast } from 'react-toastify'
+
 import api from '../service/api'
 
 export default function ItemList({ items, setItems }) {
