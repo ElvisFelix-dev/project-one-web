@@ -58,7 +58,7 @@ export default function Header() {
             ) : (
               <>
                 <li className="md:mr-12">
-                  <Link to="/list" className="text-gray-700 dark:text-white hover:underline">
+                  <Link to="/list" className="text-gray-700 dark:text-white">
                     Lista
                   </Link>
                 </li>
