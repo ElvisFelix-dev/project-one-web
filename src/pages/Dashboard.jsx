@@ -38,7 +38,7 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="w-full max-w-2xl mx-auto p-4 mt-4 mb-10 bg-white dark:bg-gray-800 rounded-lg shadow">
+    <div className="w-full max-w-2xl mx-auto p-4 mt-4  mb-10 bg-white dark:bg-gray-800 rounded-lg shadow">
       <h2 className="text-xl font-bold text-center text-gray-800 dark:text-white mb-4">
         Itens por Categoria
       </h2>
