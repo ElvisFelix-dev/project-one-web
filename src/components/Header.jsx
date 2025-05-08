@@ -1,4 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import { useAuth } from '../context/AuthContext'
 
 export default function Header() {
@@ -7,6 +8,7 @@ export default function Header() {
 
   const handleLogout = () => {
     logout()
+    toast.success(`Até logo 👋!`)
     navigate('/sign-in')
   }
 
