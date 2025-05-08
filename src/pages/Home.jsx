@@ -45,7 +45,7 @@ export default function Home(){
               <span className="w-8"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14"><path fill="#D7E0FF" stroke="#2f77ff" stroke-linecap="round" stroke-linejoin="round" d="M7 13.25C10.4518 13.25 13.25 10.4518 13.25 7C13.25 3.54822 10.4518 0.75 7 0.75C3.54822 0.75 0.75 3.54822 0.75 7C0.75 10.4518 3.54822 13.25 7 13.25Z"></path><path stroke="#2f77ff" stroke-linecap="round" stroke-linejoin="round" d="M3.8269 7.96143C4.30767 9.69219 6.23075 10.7499 7.96152 10.2691C9.01921 9.8845 9.88459 9.01912 10.1731 7.96143"></path><path stroke="#2f77ff" stroke-linecap="round" d="M4.45193 5.10068L4.45193 5.80068"></path><path stroke="#2f77ff" stroke-linecap="round" d="M9.54813 5.10068L9.54813 5.80068"></path></svg></span>
               <span className="text-gray-100">100%</span>
             </p>
-            <p className="text-sm text-gray-400">Totas elas estão felizes</p>
+            <p className="text-sm text-gray-400">Todas elas estão felizes</p>
           </div>
         </div>
       </div>
