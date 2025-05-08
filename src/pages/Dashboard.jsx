@@ -1,75 +1,91 @@
 import { useState, useEffect } from 'react'
 import { format } from 'date-fns'
-import { ptBR } from 'date-fns/locale'
+import { toast } from 'react-toastify'
 import api from '../service/api'
+import { useAuth } from '../context/AuthContext'
 
 export default function Dashboard() {
-  const [lists, setLists] = useState([])
-  const [newListName, setNewListName] = useState('')
+  const { user } = useAuth()
+  const [items, setItems] = useState([])
+  const [form, setForm] = useState({ name: '', quantity: '', category: '' })
 
   useEffect(() => {
-    fetchLists()
-  }, [])
+    if (user) fetchItems()
+  }, [user])
 
-  const fetchLists = async () => {
+  const fetchItems = async () => {
     try {
-      const response = await api.get('/api/lists')
-      setLists(response.data)
+      const response = await api.get(`/api/items/${user._id}`)
+      setItems(response.data)
     } catch (err) {
-      console.error('Erro ao buscar listas:', err)
+      toast.error('Erro ao buscar os itens')
     }
   }
 
-  const handleCreateList = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    if (!newListName.trim()) return
-
     try {
-      await api.post('/api/lists', { name: newListName })
-      setNewListName('')
-      fetchLists()
+      const response = await api.post('/api/items/add', {
+        ...form,
+        userId: user._id,
+      })
+      setItems([...items, response.data])
+      setForm({ name: '', quantity: '', category: '' })
+      toast.success('Item adicionado!')
     } catch (err) {
-      console.error('Erro ao criar lista:', err)
+      toast.error('Erro ao adicionar item')
     }
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 p-4 dark:bg-gray-900">
-      <div className="max-w-2xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow p-6 space-y-6">
-        <h2 className="text-2xl font-bold text-gray-800 dark:text-white">Minhas Listas de Compras</h2>
+    <div className="max-w-4xl mx-auto p-4">
+      <h1 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">Nova Lista de Compras</h1>
 
-        <form onSubmit={handleCreateList} className="flex gap-2">
-          <input
-            type="text"
-            placeholder="Nova lista..."
-            value={newListName}
-            onChange={(e) => setNewListName(e.target.value)}
-            className="flex-1 p-2 border rounded-md dark:bg-gray-700 dark:text-white"
-          />
-          <button
-            type="submit"
-            className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
-          >
-            Criar
-          </button>
-        </form>
+      <form onSubmit={handleSubmit} className="space-y-4 mb-8">
+        <input
+          type="text"
+          placeholder="Nome do item"
+          value={form.name}
+          onChange={(e) => setForm({ ...form, name: e.target.value })}
+          required
+          className="w-full p-2 rounded border"
+        />
+        <input
+          type="number"
+          placeholder="Quantidade"
+          value={form.quantity}
+          onChange={(e) => setForm({ ...form, quantity: e.target.value })}
+          required
+          className="w-full p-2 rounded border"
+        />
+        <input
+          type="text"
+          placeholder="Categoria"
+          value={form.category}
+          onChange={(e) => setForm({ ...form, category: e.target.value })}
+          required
+          className="w-full p-2 rounded border"
+        />
+        <button
+          type="submit"
+          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+        >
+          Adicionar Item
+        </button>
+      </form>
 
-        <ul className="space-y-3">
-          {lists.length === 0 && (
-            <li className="text-gray-500 dark:text-gray-300">Nenhuma lista criada ainda.</li>
-          )}
-          {lists.map((list) => (
-            <li
-              key={list._id}
-              className="flex items-center justify-between p-4 bg-gray-100 dark:bg-gray-700 rounded-md"
-            >
-              <span className="text-gray-800 dark:text-white">{list.name}</span>
-              <span className="text-sm text-gray-500 dark:text-gray-300">
-                Criada em {format(new Date(list.createdAt), "dd 'de' MMMM 'de' yyyy", { locale: ptBR })}
-              </span>
-            </li>
-          ))}
-        </ul>
+      <h2 className="text-xl font-semibold text-gray-700 dark:text-gray-200 mb-2">Minhas Listas</h2>
+      <div className="space-y-4">
+        {items.map((item) => (
+          <div key={item._id} className="p-4 border rounded shadow-sm bg-white dark:bg-gray-800">
+            <h3 className="font-bold text-lg text-gray-900 dark:text-white">{item.name}</h3>
+            <p className="text-gray-700 dark:text-gray-300">Quantidade: {item.quantity}</p>
+            <p className="text-gray-700 dark:text-gray-300">Categoria: {item.category}</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400">
+              Criado em: {format(new Date(item.createdAt), "dd/MM/yyyy 'às' HH:mm")}
+            </p>
+          </div>
+        ))}
       </div>
     </div>
   )
