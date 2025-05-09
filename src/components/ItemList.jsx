@@ -55,19 +55,19 @@ export default function ItemList({ items, setItems }) {
                 type="text"
                 value={editForm.name}
                 onChange={(e) => setEditForm({ ...editForm, name: e.target.value })}
-                className="block w-full mb-2 p-2 rounded"
+                className="mt-1 w-full p-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-blue-500 focus:border-blue-500"
               />
               <input
                 type="number"
                 value={editForm.quantity}
                 onChange={(e) => setEditForm({ ...editForm, quantity: e.target.value })}
-                className="block w-full mb-2 p-2 rounded"
+                className="mt-1 w-full p-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-blue-500 focus:border-blue-500"
               />
               <input
                 type="text"
                 value={editForm.category}
                 onChange={(e) => setEditForm({ ...editForm, category: e.target.value })}
-                className="block w-full mb-2 p-2 rounded"
+                className="mt-1 w-full p-2.5 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-blue-500 focus:border-blue-500"
               />
               <button
                 onClick={() => handleEditSubmit(item._id)}

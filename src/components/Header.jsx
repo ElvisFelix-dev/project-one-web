@@ -49,7 +49,7 @@ export default function Header() {
               <Link to="/contact">Contato</Link>
             </li>
             <li className="font-bold md:mr-12">
-              <Link to="/about">About</Link>
+              <Link to="/about">Sobre nós</Link>
             </li>
 
             {!user ? (
