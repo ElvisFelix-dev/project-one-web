@@ -1,4 +1,7 @@
 import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as yup from 'yup'
 import { useParams, useNavigate } from 'react-router-dom'
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai'
 import { toast } from 'react-toastify'
@@ -6,16 +9,25 @@ import { toast } from 'react-toastify'
 import api from '../service/api'
 import imgLogo from '../assets/img_Logo.svg'
 
-export default function Reset() {
-  const [password, setPassword] = useState('')
-  const [showPassword, setShowPassword] = useState(false)
+// Esquema de validação
+const schema = yup.object().shape({
+  password: yup.string().min(6, 'A senha deve ter pelo menos 6 caracteres').required('A nova senha é obrigatória'),
+})
 
+export default function Reset() {
+  const [showPassword, setShowPassword] = useState(false)
   const { token } = useParams()
   const navigate = useNavigate()
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({
+    resolver: yupResolver(schema),
+  })
 
+  const onSubmit = async (data) => {
     if (!token) {
       toast.error('Token de redefinição inválido ou expirado.')
       return
@@ -23,7 +35,7 @@ export default function Reset() {
 
     try {
       await api.post(`/api/users/reset-password/${token}`, {
-        newPassword: password,
+        newPassword: data.password,
       })
 
       toast.success('Senha atualizada com sucesso!')
@@ -44,17 +56,14 @@ export default function Reset() {
         <h2 className="text-center text-2xl font-bold text-gray-900 dark:text-white">
           Atualizar senha
         </h2>
-        <form className="space-y-5" onSubmit={handleSubmit}>
+        <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
           <div className="relative">
             <input
               type={showPassword ? 'text' : 'password'}
               id="password"
-              name="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
+              {...register('password')}
               placeholder="••••••••"
-              className="mt-1 w-full p-2.5 pr-10 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-blue-500 focus:border-blue-500"
+              className="mt-1 w-full p-2.5 pr-10 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white"
             />
             <button
               type="button"
@@ -63,6 +72,7 @@ export default function Reset() {
             >
               {showPassword ? <AiFillEyeInvisible size={20} /> : <AiFillEye size={20} />}
             </button>
+            {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>}
           </div>
 
           <button

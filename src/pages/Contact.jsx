@@ -1,61 +1,54 @@
-import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import * as yup from 'yup'
 import emailjs from '@emailjs/browser'
 import { toast } from 'react-toastify'
-import { FaEnvelope, FaPhone, FaInstagram, FaLinkedin, FaGithub, FaUser, FaPaperPlane } from 'react-icons/fa'
+import {
+  FaEnvelope, FaPhone, FaInstagram, FaLinkedin, FaGithub,
+  FaUser, FaPaperPlane
+} from 'react-icons/fa'
 
 import imgContact from '../assets/img_Contact.svg'
 
+// Validação do formulário
+const schema = yup.object().shape({
+  from_name: yup.string().required('O nome é obrigatório'),
+  email: yup.string().email('Digite um e-mail válido').required('O e-mail é obrigatório'),
+  message: yup.string().required('A mensagem é obrigatória'),
+})
+
 export default function Contact() {
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [message, setMessage] = useState('')
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors }
+  } = useForm({
+    resolver: yupResolver(schema),
+  })
 
-  const sendEmail = (e) => {
-    e.preventDefault()
-
-    if (name === '' || email === '' || message === '') {
-      toast.warning('Preencha os campos.')
-      return
-    }
-
-    const templateParams = {
-      from_name: name,
-      message,
-      email,
-    }
-
-    emailjs
-      .sendForm(
+  const sendEmail = async (data, e) => {
+    try {
+      await emailjs.sendForm(
         'service_xu4uvpb',
         'template_whmdzmb',
         e.target,
+        'rmJCCGiTr1MnU2srO'
+      )
 
-        'rmJCCGiTr1MnU2srO',
-      )
-      .then(
-        (response) => {
-          console.log('Email Enviado', response.status, response.text)
-          setEmail('')
-          setMessage('')
-          setName('')
-          toast.success('Email enviado')
-        },
-        (err) => {
-          console.log('Erro: ', err)
-          toast.error('Email não enviado.')
-        },
-      )
+      toast.success('Email enviado com sucesso!')
+      reset()
+    } catch (err) {
+      console.error('Erro ao enviar email:', err)
+      toast.error('Erro ao enviar o email. Tente novamente.')
+    }
   }
 
   return (
     <div className="flex flex-col md:flex-row min-h-screen bg-gray-100 dark:bg-gray-900">
       {/* Imagem */}
       <div className="md:w-1/2 h-64 md:h-auto flex items-center justify-center">
-        <img
-          src={imgContact}
-          alt="Contato"
-          className="w-50 h-50 object-cover"
-        />
+        <img src={imgContact} alt="Contato" className="w-50 h-50 object-cover" />
       </div>
 
       {/* Conteúdo */}
@@ -65,7 +58,7 @@ export default function Contact() {
         <div className="space-y-3 mb-8">
           <p className="text-gray-700 dark:text-gray-300 flex items-center">
             <FaEnvelope className="mr-2 text-blue-500" />
-            <a href="mailto:seuemail@exemplo.com" className="hover:underline">
+            <a href="mailto:suporte@lembrou.com.br" className="hover:underline">
               suporte@lembrou.com.br
             </a>
           </p>
@@ -87,42 +80,42 @@ export default function Contact() {
         </div>
 
         {/* Formulário */}
-        <form onSubmit={sendEmail} className="space-y-4">
-          <div className="flex items-center border rounded px-3 py-2 bg-white dark:bg-gray-800">
-            <FaUser className="text-gray-500 mr-2" />
-            <input
-              type="text"
-              placeholder="Seu nome"
-              value={name}
-              name="from_name"
-              onChange={(e) => setName(e.target.value)}
-              required
-              className="w-full bg-transparent outline-none text-gray-800 dark:text-white"
-            />
+        <form onSubmit={handleSubmit(sendEmail)} className="space-y-4">
+          <div className="flex flex-col">
+            <div className="flex items-center border rounded px-3 py-2 bg-white dark:bg-gray-800">
+              <FaUser className="text-gray-500 mr-2" />
+              <input
+                type="text"
+                placeholder="Seu nome"
+                {...register('from_name')}
+                className="w-full bg-transparent outline-none text-gray-800 dark:text-white"
+              />
+            </div>
+            {errors.from_name && <p className="text-red-500 text-sm">{errors.from_name.message}</p>}
           </div>
 
-          <div className="flex items-center border rounded px-3 py-2 bg-white dark:bg-gray-800">
-            <FaEnvelope className="text-gray-500 mr-2" />
-            <input
-              type="email"
-              name="email"
-              placeholder="Seu email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              className="w-full bg-transparent outline-none text-gray-800 dark:text-white"
-            />
+          <div className="flex flex-col">
+            <div className="flex items-center border rounded px-3 py-2 bg-white dark:bg-gray-800">
+              <FaEnvelope className="text-gray-500 mr-2" />
+              <input
+                type="email"
+                placeholder="Seu email"
+                {...register('email')}
+                className="w-full bg-transparent outline-none text-gray-800 dark:text-white"
+              />
+            </div>
+            {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
           </div>
 
-          <textarea
-            name="message"
-            placeholder="Sua mensagem..."
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            required
-            rows="4"
-            className="w-full border rounded px-3 py-2 bg-white dark:bg-gray-800 text-gray-800 dark:text-white"
-          />
+          <div className="flex flex-col">
+            <textarea
+              placeholder="Sua mensagem..."
+              rows="4"
+              {...register('message')}
+              className="w-full border rounded px-3 py-2 bg-white dark:bg-gray-800 text-gray-800 dark:text-white"
+            />
+            {errors.message && <p className="text-red-500 text-sm">{errors.message.message}</p>}
+          </div>
 
           <button
             type="submit"
