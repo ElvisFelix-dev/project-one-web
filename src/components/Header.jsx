@@ -63,8 +63,8 @@ export default function Header() {
               </li>
             ) : (
               <>
-                <li className="font-bold md:mr-12 hover:text-gray-400">
-                  <Link to="/list" className="text-gray-700 dark:text-white">
+                <li className="font-bold md:mr-12">
+                  <Link to="/list" className="text-gray-700 dark:text-white hover:text-gray-400">
                     Lista
                   </Link>
                 </li>
