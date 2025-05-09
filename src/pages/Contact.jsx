@@ -60,7 +60,7 @@ export default function Contact() {
 
       {/* Conteúdo */}
       <div className="md:w-1/2 flex flex-col justify-center px-8 py-12">
-        <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-6">Fale Comigo</h2>
+        <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-6">Fale Conosco</h2>
 
         <div className="space-y-3 mb-8">
           <p className="text-gray-700 dark:text-gray-300 flex items-center">
