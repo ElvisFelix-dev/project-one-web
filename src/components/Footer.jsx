@@ -46,7 +46,7 @@ export default function Footer() {
                       </ul>
                   </div>
                   <div>
-                      <h4 className="text-lg font-bold mb-4">Rede Social</h4>
+                      <h4 className="text-lg font-bold mb-4">Rede Sociais</h4>
                       <div className="flex space-x-4">
                           <a href="#" className="hover:text-blue-400"><AiFillFacebook size={20} /></a>
                           <a href="#" className="hover:text-blue-400"><AiFillInstagram size={20} /></a>
