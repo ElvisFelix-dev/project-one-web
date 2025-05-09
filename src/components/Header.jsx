@@ -63,7 +63,7 @@ export default function Header() {
               </li>
             ) : (
               <>
-                <li className="md:mr-12">
+                <li className="font-bold md:mr-12">
                   <Link to="/list" className="text-gray-700 dark:text-white">
                     Lista
                   </Link>
