@@ -45,6 +45,12 @@ export default function Header() {
             <li className="font-bold md:mr-12">
               <Link to="/dashboard">Dashboard</Link>
             </li>
+            <li className="font-bold md:mr-12">
+              <Link to="/contact">Contato</Link>
+            </li>
+            <li className="font-bold md:mr-12">
+              <Link to="/about">About</Link>
+            </li>
 
             {!user ? (
               <li className="md:mr-12">

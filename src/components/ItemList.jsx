@@ -1,9 +1,7 @@
-// components/ItemList.jsx
 import { useState } from 'react'
-import { CiTrash, CiEdit } from "react-icons/ci";
+import { CiTrash, CiEdit } from "react-icons/ci"
 import { format } from 'date-fns'
 import { toast } from 'react-toastify'
-
 import api from '../service/api'
 
 export default function ItemList({ items, setItems }) {
@@ -33,6 +31,17 @@ export default function ItemList({ items, setItems }) {
       toast.success('Item atualizado!')
     } catch {
       toast.error('Erro ao editar item')
+    }
+  }
+
+  const togglePurchased = async (item) => {
+    try {
+      const response = await api.put(`/api/items/${item._id}`, {
+        purchased: !item.purchased,
+      })
+      setItems(items.map((i) => i._id === item._id ? response.data : i))
+    } catch {
+      toast.error('Erro ao atualizar status do item')
     }
   }
 
@@ -75,7 +84,22 @@ export default function ItemList({ items, setItems }) {
             </>
           ) : (
             <>
-              <h3 className="font-bold text-lg text-gray-900 dark:text-white">{item.name}</h3>
+              <div className="flex items-center justify-between">
+                <h3
+                  className={`font-bold text-lg ${
+                    item.purchased ? 'line-through text-gray-500 dark:text-gray-400' : 'text-gray-900 dark:text-white'
+                  }`}
+                >
+                  {item.name}
+                </h3>
+                <input
+                  type="checkbox"
+                  checked={item.purchased}
+                  onChange={() => togglePurchased(item)}
+                  className="w-5 h-5 accent-green-500"
+                  title="Marcar como comprado"
+                />
+              </div>
               <p className="text-gray-700 dark:text-gray-300">Quantidade: {item.quantity}</p>
               <p className="text-gray-700 dark:text-gray-300">Categoria: {item.category}</p>
               <p className="text-sm text-gray-500 dark:text-gray-400">
@@ -83,7 +107,7 @@ export default function ItemList({ items, setItems }) {
               </p>
               <div className="mt-2 space-x-2">
                 <button
-                  onClick={() => handleEditClick(item)}
+                  onClick={() => handleEdit(item)}
                   className="text-yellow-500 hover:text-yellow-700"
                 >
                   <CiEdit size={20} />
