@@ -122,7 +122,7 @@ Contribuições são bem-vindas! Para contribuir:
 
 ---
 
-## 📃 Licença
+## :memo: Licença 
 
 Distribuído sob a licença **MIT**. Veja `LICENSE` para mais informações.
 
@@ -130,6 +130,6 @@ Distribuído sob a licença **MIT**. Veja `LICENSE` para mais informações.
 
 ## 📬 Contato
 
-Desenvolvido por Elvis Felix 🤍 – [LinkedIn](https://www.linkedin.com/in/elvis-felix)
-Email: elvisfelix_575@hotmail.com
+Desenvolvido por Elvis Felix 🤍 – [LinkedIn](https://www.linkedin.com/in/elvis-felix)<br/>
+Email: elvisfelix_575@hotmail.com <br/>
 GitHub: [github.com/ElvisFelix-dev](https://github.com/ElvisFelix-dev)
