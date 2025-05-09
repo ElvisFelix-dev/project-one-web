@@ -42,13 +42,13 @@ export default function Header() {
           className="peer-checked:mt-8 peer-checked:max-h-56 flex max-h-0 w-full flex-col items-center justify-between overflow-hidden transition-all md:ml-24 md:max-h-full md:flex-row md:items-start"
         >
           <ul className="flex flex-col items-center space-y-2 md:ml-auto md:flex-row md:space-y-0">
-            <li className="font-bold md:mr-12">
+            <li className="font-bold md:mr-12 hover:text-gray-400">
               <Link to="/dashboard">Dashboard</Link>
             </li>
-            <li className="font-bold md:mr-12">
+            <li className="font-bold md:mr-12 hover:text-gray-400">
               <Link to="/contact">Contato</Link>
             </li>
-            <li className="font-bold md:mr-12">
+            <li className="font-bold md:mr-12 hover:text-gray-400">
               <Link to="/about">Sobre nós</Link>
             </li>
 
@@ -63,7 +63,7 @@ export default function Header() {
               </li>
             ) : (
               <>
-                <li className="font-bold md:mr-12">
+                <li className="font-bold md:mr-12 hover:text-gray-400">
                   <Link to="/list" className="text-gray-700 dark:text-white">
                     Lista
                   </Link>
